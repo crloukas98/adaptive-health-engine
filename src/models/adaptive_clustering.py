@@ -61,7 +61,7 @@ def load_adaptive_model():
     and scaler.
     """
 
-    path = Path("src/models/artifacts")
+    path = Path("../src/models/artifacts")
 
     model = joblib.load(
         path / "adaptive_cluster_model.pkl"
