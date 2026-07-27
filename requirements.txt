@@ -9,6 +9,10 @@ fastapi
 uvicorn
 pydantic
 
+# Testing
+pytest
+httpx
+
 # Development / analysis
 matplotlib
 seaborn
