@@ -1,4 +1,5 @@
 PHENOTYPE_LABELS = {
+
     0: {
         "name": "High adiposity metabolic risk phenotype",
         "description": (

@@ -3,12 +3,8 @@ from src.inference.phenotype_predictor import (
     predict_phenotype
 )
 
-from src.recommendations.profile_generator import (
-    generate_health_profile
-)
-
-from src.recommendations.intervention_engine import (
-    generate_recommendation
+from src.recommendations.report_generator import (
+    generate_full_report
 )
 
 from src.recommendations.phenotype_labels import (
@@ -25,8 +21,28 @@ def predict_health_profile(
     """
     Generate a complete adaptive health profile
     for a new individual.
+
+    Parameters
+    ----------
+    age : float
+        Age in years.
+
+    weight_kg : float
+        Body weight in kilograms.
+
+    height_cm : float
+        Height in centimeters.
+
+    activity_score : float
+        Activity index.
+
+    Returns
+    -------
+    dict
+        Health profile and recommendations.
     """
 
+    # Predict phenotype cluster
     cluster = predict_phenotype(
         age,
         weight_kg,
@@ -34,8 +50,10 @@ def predict_health_profile(
         activity_score
     )
 
+    # Load phenotype interpretation
     phenotype_info = PHENOTYPE_LABELS[cluster]
 
+    # Create feature vector
     features = prepare_individual_features(
         age,
         weight_kg,
@@ -43,20 +61,24 @@ def predict_health_profile(
         activity_score
     )
 
-    profile = generate_health_profile(
-        features.iloc[0],
+    individual_features = features.iloc[0]
+
+
+    # Generate report
+    report = generate_full_report(
+        individual_features,
         cluster
     )
 
-    profile["phenotype_name"] = phenotype_info["name"]
 
-    profile["phenotype_description"] = phenotype_info["description"]
-
-    recommendations = generate_recommendation(
-        features.iloc[0]
+    # Add explainable phenotype information
+    report["profile"]["phenotype_name"] = (
+        phenotype_info["name"]
     )
 
-    return {
-        "profile": profile,
-        "recommendations": recommendations
-    }
+    report["profile"]["phenotype_description"] = (
+        phenotype_info["description"]
+    )
+
+
+    return report
