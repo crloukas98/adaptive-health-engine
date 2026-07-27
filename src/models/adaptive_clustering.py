@@ -55,20 +55,22 @@ def save_adaptive_model(model, scaler):
     )
 
 
-def load_adaptive_model():
-    """
-    Load trained clustering model
-    and scaler.
-    """
+from pathlib import Path
+import joblib
 
-    path = Path("../src/models/artifacts")
+
+def load_adaptive_model():
+
+    base_path = Path(__file__).resolve().parent
+
+    artifact_path = base_path / "artifacts"
 
     model = joblib.load(
-        path / "adaptive_cluster_model.pkl"
+        artifact_path / "adaptive_cluster_model.pkl"
     )
 
     scaler = joblib.load(
-        path / "adaptive_scaler.pkl"
+        artifact_path / "adaptive_scaler.pkl"
     )
 
     return model, scaler
