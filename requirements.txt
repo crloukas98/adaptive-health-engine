@@ -1,8 +1,16 @@
 pandas
 numpy
 scikit-learn
+scipy
+joblib
+
+# API
+fastapi
+uvicorn
+pydantic
+
+# Development / analysis
 matplotlib
 seaborn
 jupyter
-scipy
 requests
