@@ -9,6 +9,9 @@ def create_basic_health_features(df):
 
     features = pd.DataFrame()
 
+    # Participant ID
+    features["SEQN"] = df["SEQN"]
+
     # Age
     features["age"] = df["RIDAGEYR"]
 
@@ -22,7 +25,6 @@ def create_basic_health_features(df):
     features["bmi"] = df["BMXBMI"]
 
     return features
-
 
 def clean_features(df):
     """
