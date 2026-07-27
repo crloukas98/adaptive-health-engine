@@ -11,6 +11,10 @@ from src.recommendations.intervention_engine import (
     generate_recommendation
 )
 
+from src.recommendations.phenotype_labels import (
+    PHENOTYPE_LABELS
+)
+
 
 def predict_health_profile(
     age,
@@ -30,6 +34,8 @@ def predict_health_profile(
         activity_score
     )
 
+    phenotype_info = PHENOTYPE_LABELS[cluster]
+
     features = prepare_individual_features(
         age,
         weight_kg,
@@ -41,6 +47,10 @@ def predict_health_profile(
         features.iloc[0],
         cluster
     )
+
+    profile["phenotype_name"] = phenotype_info["name"]
+
+    profile["phenotype_description"] = phenotype_info["description"]
 
     recommendations = generate_recommendation(
         features.iloc[0]
